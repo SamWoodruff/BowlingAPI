@@ -1,15 +1,20 @@
 package io.qdivision.qtp.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Frame {
     List<Integer> rolls;
     private Integer id;
     private Integer frameScore;
+    private Integer accumulativeScore;
 
     public Frame(int id){
         this.id = id;
@@ -19,17 +24,10 @@ public class Frame {
     public ArrayList<Integer> generateRolls(){
         int size = this.id != 9 ? 2 : 3;
         ArrayList<Integer> balls= new ArrayList<>();
-//        for (int i = 0; i < size; i++){
-//            balls.add(5);
-//        }
-        if (this.id != 9) {
-            balls.add(5);
-            balls.add(0);
-        } else {
-            balls.add(5);
-            balls.add(5);
-            balls.add(5);
+        for (int i = 0; i < size; i++){
+            balls.add(null);
         }
+
         return balls;
     }
 
@@ -43,8 +41,8 @@ public class Frame {
         return sum;
     }
 
-    public void setRoll(int roll, Integer value){
-        this.rolls.set(roll, value);
+    public void addRollToFrame(Integer rollId, Integer value){
+        this.rolls.set(rollId, value);
     }
 
 }
