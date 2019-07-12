@@ -57,7 +57,6 @@ class Scorer {
                 score += frame.getFrameScore();
             }
         }
-
         System.out.println(score);
         return score;
     }

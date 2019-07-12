@@ -33,7 +33,7 @@ private List<Frame> generateFrames(){
 }
 
 public Integer tallyScore(List<Frame> frames){
-    score = Scorer.calculateScore(frames);
+    this.score = Scorer.calculateScore(frames);
     System.out.println(score);
     return score;
 }

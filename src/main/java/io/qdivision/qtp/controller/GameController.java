@@ -1,5 +1,6 @@
 package io.qdivision.qtp.controller;
 
+import io.qdivision.qtp.model.Frame;
 import io.qdivision.qtp.model.Game;
 import io.qdivision.qtp.model.NewPlayerRequest;
 import io.qdivision.qtp.model.Player;
@@ -34,8 +35,8 @@ public class GameController {
     }
 
     @PutMapping("games/editRoll/{gameId}/{playerId}/{frameId}/{rollId}/{roll}")
-    public void addRollToFrame(@PathVariable String gameId, @PathVariable Integer playerId, @PathVariable Integer frameId, @PathVariable Integer rollId, @PathVariable Integer roll){
-        gameRepository.addRollToFrame(gameId,playerId,frameId,rollId,roll);
+    public Frame addRollToFrame(@PathVariable String gameId, @PathVariable Integer playerId, @PathVariable Integer frameId, @PathVariable Integer rollId, @PathVariable Integer roll){
+        return gameRepository.addRollToFrame(gameId,playerId,frameId,rollId,roll);
     }
 
     @PutMapping("games/editRoll/{gameId}")

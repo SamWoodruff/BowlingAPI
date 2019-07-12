@@ -29,24 +29,32 @@ public class GameRepository {
         return game;
     }
 
-    public void addRollToFrame(String gameId, Integer playerId, Integer frameId, Integer rollId, Integer roll){
+    public Frame addRollToFrame(String gameId, Integer playerId, Integer frameId, Integer rollId, Integer roll){
+        Game game = gameMap.get(gameId);
+        validateGame(game);
+
         Frame currentFrame = gameMap.get(gameId).getPlayerList().get(playerId).getFrameList().get(frameId);
         currentFrame.addRollToFrame(rollId, roll);
-        Game previousGameState = gameMap.remove(gameId);
-        for(Player player : previousGameState.getPlayerList()){
+        for(Player player : game.getPlayerList()){
             player.tallyScore(player.getFrameList());
+        }
+        return currentFrame;
+    }
+
+    public void validateGame(Game game){
+        if(game == null){
+            throw new GameNotFoundException();
         }
     }
 
     public Game updateGame(String gameId, Game game){
         Game previousGameState = gameMap.remove(gameId);
-        if(previousGameState == null){
-            throw new GameNotFoundException();
-        }else{
-            for(Player player : previousGameState.getPlayerList()){
-                player.tallyScore(player.getFrameList());
-            }
-            return gameMap.put(gameId,game);
+        validateGame(previousGameState);
+
+        for(Player player : game.getPlayerList()){
+            player.tallyScore(player.getFrameList());
         }
+        gameMap.put(gameId,game);
+        return game;
     }
 }
