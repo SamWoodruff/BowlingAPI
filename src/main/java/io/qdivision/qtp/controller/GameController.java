@@ -36,23 +36,26 @@ public class GameController {
 
     @PutMapping("games/editRoll/{gameId}/{playerId}/{frameId}/{rollId}/{roll}")
     public Frame addRollToFrame(@PathVariable String gameId, @PathVariable Integer playerId, @PathVariable Integer frameId, @PathVariable Integer rollId, @PathVariable Integer roll){
+        log.info("Roll:{} for rollId:{} added on frame:{} for player:{} in game:{}",roll, rollId, frameId, playerId, gameId);
         return gameRepository.addRollToFrame(gameId,playerId,frameId,rollId,roll);
     }
 
     @PutMapping("games/editRoll/{gameId}")
     public Game updateGame(@PathVariable String gameId, @RequestBody Game game){
+        log.info("Game Id:{} with game:{}",gameId,game);
         return gameRepository.updateGame(gameId, game);
     }
 
     @PostMapping("games/addPlayer/{gameId}")
     public Game savePlayer(@RequestBody NewPlayerRequest newPlayer, @PathVariable String gameId){
         Player player = new Player(newPlayer.getName());
+        log.info("Player:{} created from Game:{} ",newPlayer, gameId);
         return gameRepository.addPlayer(player, gameId);
     }
 
     @PostMapping("/games")
     @ResponseStatus(HttpStatus.CREATED)
-    public Game newGame(@RequestBody Game newGame){
+    public Game newGame(Game newGame){
         newGame = gameRepository.saveGame(newGame);
         log.info("Game:{} created", newGame);
         return newGame;
